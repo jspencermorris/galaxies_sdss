@@ -71,39 +71,34 @@ def query_and_save_sdss_data(query, filename):
     
     #return response
 
-# retrieve zoo2MainPhotoz
-#query_zoo2MainPhotoz = 'select top 500000 dr8objid, dr7objid, ra, dec, total_classifications, total_voates, from zoo2MainPhotoz'
-#query_and_save_sdss_data(query_zoo2MainPhotoz, 'zoo2MainPhotoz')
 
-# retrieve zoo2MainSpecz
-#query_zoo2MainSpecz = ''
+# retrieve zoo + Spec + Photo
+query_galaxySpecPhoto = '''select top 1000000
+z.specobjid, z.objid as dr8objid, z.dr7objid, z.ra, z.dec, z.nvote_tot, z.nvote_std, z.nvote_mr1,
+z.nvote_mr2, z.nvote_mon, z.p_el, z.p_cw, z.p_acw, z.p_edge, z.p_dk, z.p_mg, z.p_cs,
+s.instrument, s.z as redshift, s.class as sdss_class_string, s.subClass as sdss_subclass_string, s.class_noqso,
+s.subClass_noqso, s.spectroFlux_u, s.spectroFlux_g, s.spectroFlux_r, s.spectroFlux_i, s.spectroFlux_z,
+s.spectroSynFlux_u, s.spectroSynFlux_g, s.spectroSynFlux_r, s.spectroSynFlux_i, s.spectroSynFlux_z,
+s.elodieObject, s.elodieSpType, s.elodieBV, s.elodieTEff, s.elodieLogG, s.elodieFeH, s.elodieZ,
+p.type as sdss_class_number, p.clean, p.u, p.g, p.r, p.i, p.z, p.nObserve, p.nDetect, p.nEdge, p.score
+from DR16.PhotoObj as p
+join DR16.SpecObj as s
+on p.objid = s.bestobjid
+join DR16.zooVotes as z
+on p.objid = z.objid
+into MyDB.galaxySpecPhoto'''
 
-# retrieve zooConfidence
-#query_zooConfidence = ''
 
-# retrieve zooNoSpec
-#query_zooNoSpec = ''
-
-# retrieve zooSpec
-#query_zooSpec = ''
-
-# retrieve zooVotes
-query_zooVotes = '''select *
-from DR16.zooVotes
-into MyDB.zooVotes'''
-
-# retrieve specObj
-query_specObj = '''select top 1000000
-  specObjID, bestObjID, targetObjID, instrument, ra, dec, z, 
-  class, subClass, class_noqso, subClass_noqso, class_person,
-  spectroFlux_u, spectroFlux_g, spectroFlux_r, spectroFlux_i, spectroFlux_z,
-  spectroSynFlux_u, spectroSynFlux_g, spectroSynFlux_r, spectroSynFlux_i, spectroSynFlux_z,
-  elodieObject, elodieSpType, elodieBV, elodieTEff, elodieLogG, elodieFeH, elodieZ
-from DR16.specObj
-into MyDB.specObj'''
-
-# retrieve PhotoObj
-query_PhotoObj = '''select top 1000000
-  objID, type, clean, ra, dec, specObjID, u, g, r, i, z, nObserve, nDetect, nEdge, score
-from DR16.PhotoObj
-into MyDB.PhotoObjA'''
+# retrieve 
+query_otherSpecPhoto = '''select top 1000000
+s.bestobjid as dr8objid, s.specObjID,
+s.instrument, s.z as redshift, s.class as sdss_class_string, s.subClass as sdss_subclass_string, s.class_noqso,
+s.subClass_noqso, s.spectroFlux_u, s.spectroFlux_g, s.spectroFlux_r, s.spectroFlux_i, s.spectroFlux_z,
+s.spectroSynFlux_u, s.spectroSynFlux_g, s.spectroSynFlux_r, s.spectroSynFlux_i, s.spectroSynFlux_z,
+s.elodieObject, s.elodieSpType, s.elodieBV, s.elodieTEff, s.elodieLogG, s.elodieFeH, s.elodieZ,
+p.type as sdss_class_number, p.clean, p.u, p.g, p.r, p.i, p.z, p.nObserve, p.nDetect, p.nEdge, p.score
+from DR16.SpecObj as s
+join DR16.PhotoObj as p
+on s.bestobjid = p.objid
+where s.class <> "GALAXY"
+into MyDB.otherSpecPhoto'''
