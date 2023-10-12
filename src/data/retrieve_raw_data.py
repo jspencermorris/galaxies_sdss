@@ -88,10 +88,22 @@ def query_and_save_sdss_data(query, filename):
 #query_zooSpec = ''
 
 # retrieve zooVotes
-query_zooVotes = 'select * from zooVotes'
+query_zooVotes = '''select *
+from DR16.zooVotes
+into MyDB.zooVotes'''
 
 # retrieve specObj
-query_specObj = 'select top 500000 * from specObj'
+query_specObj = '''select top 1000000
+  specObjID, bestObjID, targetObjID, instrument, ra, dec, z, 
+  class, subClass, class_noqso, subClass_noqso, class_person,
+  spectroFlux_u, spectroFlux_g, spectroFlux_r, spectroFlux_i, spectroFlux_z,
+  spectroSynFlux_u, spectroSynFlux_g, spectroSynFlux_r, spectroSynFlux_i, spectroSynFlux_z,
+  elodieObject, elodieSpType, elodieBV, elodieTEff, elodieLogG, elodieFeH, elodieZ
+from DR16.specObj
+into MyDB.specObj'''
 
 # retrieve PhotoObj
-query_PhotoObj = 'select top 500000 * from PhotoObj'
+query_PhotoObj = '''select top 1000000
+  objID, type, clean, ra, dec, specObjID, u, g, r, i, z, nObserve, nDetect, nEdge, score
+from DR16.PhotoObj
+into MyDB.PhotoObjA'''
