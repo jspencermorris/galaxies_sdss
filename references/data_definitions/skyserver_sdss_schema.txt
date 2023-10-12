@@ -1,0 +1,44 @@
+Type (column values)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=enum+PhotoType+E
+
+GalaxyTag (View data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+GalaxyTag+V
+
+Galaxy (View data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+Galaxy+V
+
+zoo2MainPhotoz (Table data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+zoo2MainPhotoz+U
+
+zoo2MainSpecz (Table data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+zoo2MainSpecz+U
+
+zooConfidence (Table data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+zooConfidence+U
+
+zooNoSpec (Table data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+zooNoSpec+U
+
+zooSpec (Table data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+zooSpec+U
+
+zooVotes (Table data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+zooVotes+U
+
+PhotoObj (View data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+PhotoObj+V
+
+PhotoObjDR7 (Table data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+PhotoObjDR7+U
+
+PhotoObjAll (Table data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+PhotoObjAll+U
+
+SpecObj (View data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+SpecObj+V
+
+SpecDR7 (Table data definitions)
+https://skyserver.sdss.org/dr16/en/help/browser/browser.aspx#&&history=description+SpecDR7+U
+
+
+
