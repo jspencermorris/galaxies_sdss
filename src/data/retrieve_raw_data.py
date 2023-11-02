@@ -72,43 +72,6 @@ def query_and_save_sdss_data(query, filename):
     #return response
 
 
-# retrieve zoo + Spec + Photo
-query_galaxySpecPhoto = '''select top 1000000
-z.specobjid, z.objid as dr8objid, z.dr7objid, z.ra, z.dec, z.nvote_tot, z.nvote_std, z.nvote_mr1,
-z.nvote_mr2, z.nvote_mon, z.p_el, z.p_cw, z.p_acw, z.p_edge, z.p_dk, z.p_mg, z.p_cs,
-s.instrument, s.z as redshift, s.class as sdss_class_string, s.subClass as sdss_subclass_string, s.class_noqso,
-s.subClass_noqso, s.spectroFlux_u, s.spectroFlux_g, s.spectroFlux_r, s.spectroFlux_i, s.spectroFlux_z,
-s.spectroSynFlux_u, s.spectroSynFlux_g, s.spectroSynFlux_r, s.spectroSynFlux_i, s.spectroSynFlux_z,
-s.elodieObject, s.elodieSpType, s.elodieBV, s.elodieTEff, s.elodieLogG, s.elodieFeH, s.elodieZ,
-p.type as sdss_class_number, p.clean, p.u, p.g, p.r, p.i, p.z, p.nObserve, p.nDetect, p.nEdge, p.score
-from DR16.PhotoObj as p
-join DR16.SpecObj as s
-on p.objid = s.bestobjid
-join DR16.zooVotes as z
-on p.objid = z.objid
-into MyDB.galaxySpecPhoto'''
-
-
-# retrieve non-galaxy data from Spec+Photo
-query_otherSpecPhoto = '''select top 1000000
-s.bestobjid as dr8objid, s.specObjID,
-s.instrument, s.z as redshift, s.class as sdss_class_string, s.subClass as sdss_subclass_string, s.class_noqso,
-s.subClass_noqso, s.spectroFlux_u, s.spectroFlux_g, s.spectroFlux_r, s.spectroFlux_i, s.spectroFlux_z,
-s.spectroSynFlux_u, s.spectroSynFlux_g, s.spectroSynFlux_r, s.spectroSynFlux_i, s.spectroSynFlux_z,
-s.elodieObject, s.elodieSpType, s.elodieBV, s.elodieTEff, s.elodieLogG, s.elodieFeH, s.elodieZ,
-p.type as sdss_class_number, p.clean, p.u, p.g, p.r, p.i, p.z, p.nObserve, p.nDetect, p.nEdge, p.score
-from DR16.SpecObj as s
-join DR16.PhotoObj as p
-on s.bestobjid = p.objid
-where s.class <> "GALAXY"
-into MyDB.otherSpecPhoto'''
-
-
-
-
-
-
-
 """
 improved queries w/ cuts from academic papers
 
@@ -133,7 +96,7 @@ Similar cutoffs for other objects:
     magnitude < 17.0
     Objects flagged by the SDSS pipeline as SATURATED, BRIGHT, or BLENDED without an accompanying NODEBLEND flag were excluded
     
-    
+
 Conservative Cutoffs for Galaxies:
     redshifts in the range of 0.001 < z < 0.25
     angular size: petroR90_r > 3 arcsec
@@ -146,6 +109,7 @@ Similar cutoffs for other objects:
 Query Interface:
     https://skyserver.sdss.org/CasJobs/casjobscl.aspx
 """
+
 
 # retrieve zoo + Spec + Photo
 query_galaxySpecPhoto = '''select top 1000000
@@ -175,7 +139,6 @@ join DR16.zooSpec as z
 on p.objid = z.objid
 where p.r < 17.0
 into MyDB.galaxySpecPhoto'''
-
 
 
 # retrieve non-galaxy data from Spec+Photo
