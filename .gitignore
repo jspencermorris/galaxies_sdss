@@ -1,3 +1,4 @@
 # ignore image data
 data/raw/gz2/images/
 data/raw/skyserver_sdss/
+data/processed/sdss_full.csv.gz
