@@ -89,7 +89,7 @@ on p.objid = z.objid
 into MyDB.galaxySpecPhoto'''
 
 
-# retrieve 
+# retrieve non-galaxy data from Spec+Photo
 query_otherSpecPhoto = '''select top 1000000
 s.bestobjid as dr8objid, s.specObjID,
 s.instrument, s.z as redshift, s.class as sdss_class_string, s.subClass as sdss_subclass_string, s.class_noqso,
@@ -101,4 +101,102 @@ from DR16.SpecObj as s
 join DR16.PhotoObj as p
 on s.bestobjid = p.objid
 where s.class <> "GALAXY"
+into MyDB.otherSpecPhoto'''
+
+
+
+
+
+
+
+"""
+improved queries w/ cuts from academic papers
+
+GZ1:  galaxies w/ Petrosian radius rp < 4.5 arcsec and r < 17
+    redshifts in the range 0.001 < z < 0.25
+GZ2:  All galaxies in the DR7 Legacy survey w/ mr>17
+    GZ2 required a Petrosian half-light magnitude brighter than 17.0 in the r-band (after galactic extinction correction was applied)
+    There was a size limit of petroR90_r>3 arcsec (petroR90_r is the radius containing 90% of the r-band Petrosian aperture flux)
+    Galaxies which had a spectroscopic redshift in the DR7 catalogue outside the range of 0.0005<z<0.25 were excluded
+    Objects flagged by the SDSS pipeline as SATURATED, BRIGHT, or BLENDED without an accompanying NODEBLEND flag were excluded
+    Summary:
+        GZ2 classified gri colour composite images selected on the basis of magnitude (mr < 17), 
+        angular size (r90 > 3 arcsec), 
+        and redshift (0.0005 <z< 0.25) criteria
+
+Conservative Cutoffs for Galaxies:
+    redshifts in the range of 0.001 < z < 0.25
+    angular size: petroR90_r > 3 arcsec
+    Petrosian magnitude mr < 17.0
+    Objects flagged by the SDSS pipeline as SATURATED, BRIGHT, or BLENDED without an accompanying NODEBLEND flag were excluded
+Similar cutoffs for other objects:
+    magnitude < 17.0
+    Objects flagged by the SDSS pipeline as SATURATED, BRIGHT, or BLENDED without an accompanying NODEBLEND flag were excluded
+    
+    
+Conservative Cutoffs for Galaxies:
+    redshifts in the range of 0.001 < z < 0.25
+    angular size: petroR90_r > 3 arcsec
+    Petrosian magnitude mr < 17.0
+    Objects flagged by the SDSS pipeline as SATURATED, BRIGHT, or BLENDED without an accompanying NODEBLEND flag were excluded
+Similar cutoffs for other objects:
+    magnitude < 17.0
+    Objects flagged by the SDSS pipeline as SATURATED, BRIGHT, or BLENDED without an accompanying NODEBLEND flag were excluded
+    
+Query Interface:
+    https://skyserver.sdss.org/CasJobs/casjobscl.aspx
+"""
+
+# retrieve zoo + Spec + Photo
+query_galaxySpecPhoto = '''select top 1000000
+
+z.specobjid as z_specobjid, z.objid as z_dr8objid, z.dr7objid as z_dr7objid, 
+z.ra as z_ra, z.dec as z_dec, 
+
+z.p_el, z.p_cw, z.p_acw, z.p_edge, z.p_dk, z.p_mg, z.p_cs,
+z.p_el_debiased, z.p_cs_debiased,
+z.spiral, z.elliptical, z.uncertain,
+
+s.z as s_redshift, s.z_noqso as s_redshift_noqso, s.elodieZ as s_redshift_elodie,
+
+s.sourceType as s_sourceType, s.class as s_class, s.subClass as s_subClass,
+s.class_noqso as s_class_noqso, s.subClass_noqso as s_subClass_noqso,
+
+s.spectroFlux_u, s.spectroFlux_g, s.spectroFlux_r, s.spectroFlux_i, s.spectroFlux_z,
+s.elodieObject, s.elodieSpType, s.elodieBV, s.elodieTEff, s.elodieLogG, s.elodieFeH,
+
+p.type as p_type, p.clean, p.score, P.petroR90_r,
+p.u, p.g, p.r, p.i, p.z
+
+from DR16.PhotoObj as p
+join DR16.SpecObj as s
+on p.objid = s.bestobjid
+join DR16.zooSpec as z
+on p.objid = z.objid
+where p.r < 17.0
+into MyDB.galaxySpecPhoto'''
+
+
+
+# retrieve non-galaxy data from Spec+Photo
+query_otherSpecPhoto = '''select top 1000000
+
+s.specObjID as s_specobjid, s.bestobjid as s_dr8objid,
+s.ra as s_ra, s.dec as s_dec,
+
+s.z as s_redshift, s.z_noqso as s_redshift_noqso, s.elodieZ as s_redshift_elodie,
+
+s.sourceType as s_sourceType, s.class as s_class, s.subClass as s_subClass,
+s.class_noqso as s_class_noqso, s.subClass_noqso as s_subClass_noqso,
+
+s.spectroFlux_u, s.spectroFlux_g, s.spectroFlux_r, s.spectroFlux_i, s.spectroFlux_z,
+s.elodieObject, s.elodieSpType, s.elodieBV, s.elodieTEff, s.elodieLogG, s.elodieFeH,
+
+p.type as p_type, p.clean, p.score,
+p.u, p.g, p.r, p.i, p.z
+
+from DR16.SpecObj as s
+join DR16.PhotoObj as p
+on s.bestobjid = p.objid
+where s.class not in ('GALAXY') and p.r < 17.0
 into MyDB.otherSpecPhoto'''
