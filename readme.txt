@@ -1,4 +1,4 @@
-The project within this repository was completed as part of the requirements for fulfillment of the course DATASCI207 the University of California, Berkeley.
+The project within this repository was completed as part of the requirements for fulfillment of the course DATASCI207 at the University of California, Berkeley.
 
 Course: DATASCI207 – Applied Machine Learning, Section 7
 Instructor: Ishaani Priyadarshini
