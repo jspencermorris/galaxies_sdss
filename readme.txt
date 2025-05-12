@@ -1,12 +1,9 @@
-The project within this repository was completed as part of the requirements for fulfillment of the course DATASCI207 at the University of California, Berkeley.
 
-Course: DATASCI207 – Applied Machine Learning, Section 7
-Instructor: Ishaani Priyadarshini
-Assignment: Comprehensive Project
-Title: Unlocking the Cosmos: Machine Learning Insights into Astronomical Object Classification and 
-Galaxy Typing from SDSS and Galaxy Zoo 2
-Authors: Ahmad Allaou, Daelyn Bergsman, and J. Spencer Morris
-Date: 14 December 2023
+Machine Learning Insights into Astronomical Object Classification and Galaxy Typing from SDSS and GZ2
+
+Dec 2023
+
+Applied classical machine learning techniques to classify astronomical objects and galaxy types; used physics-informed models to engineer new features; explored 12 modeling approaches across both tabular and imagery datasets.
 
 Virtual environment details in ./requirements.txt.
 
